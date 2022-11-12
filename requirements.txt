@@ -3,3 +3,5 @@ django-encrypted-model-fields
 pytest~=7.1.2
 pytest-django
 Django~=4.1.3
+django-cryptography
+python-dotenv

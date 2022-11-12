@@ -1,0 +1,36 @@
+The first vulnerability I found was the XSS vulnerability. Within one of the templates there exists a variable that is noted as a safe string.
+In 'gift.html' on line 60 director as a safe string. This can be used to exploit the XSS vulnerability. The following payload will demonstrate it.
+
+http://127.0.0.1:8000/gift.html?director=<script>alert('This is an XSS vulnerability')</script>
+
+The fix for this bug is simple. We remove the safe tag which will allow input validation to be performed.
+
+
+At this point I tried to test this using github actions but no matter what I tried it was unsuccessful. I know it was suggested to use individual
+python files to conduct the tests but I didn't know how to do that. I was able to successfully test these attacks and fixes locally, however, so
+that's how I had to proceed through the rest of the lab.
+
+
+The second attack is using a CSRF attack. 
+
+The second vulnerability I found is a CSRF vulneraiblity. We can craft an html page using a form to submit a gift card purchase for the threat actor.
+Within the 'csrf.html' file we use the form action to purchase a food gift card which is option 2. We use two hidden input types that we design.
+The username is going to be the threat actor's user name and the amount will be the value added to the card. Upon loading the page we automatically
+submit the form so the victim doesn't have a chance to prevent this attack.
+
+Django has some built in CSRF protection. We can utilize this to fix the vulnerability. We can add the @csrf_protect decorator to the gift_card_view()
+function within views. In the 'gift.html' template we can add to the form action on line 78 the {% CSRF_TOKEN %} tag. Upon doing so the request fails.
+
+
+The third vulnerability found can be exploited with SQL injection to find the hashed and salted value of the admin account.
+Within the views is the use_card_view() function. On line 197 the designer used the signature contained within the gift card as part of 
+a SQL request. To do this I bought a gift card from the site and modified it. I changed the signature to include further SQL commands.
+I used "' UNION ALL SELECT password FROM LegacySite_user WHERE username = 'admin". We need to use UNION first as we are attaching it
+to another SELECT command which is within the code. After that we can perform the query we want. The result is the display of the admin hashed password.
+The gift card I created is included as 'attack.gftcrd'
+
+To fix this we will not use raw text as part of the query. We can pass the signature instead as a parameter. I changed the variable signature to instead
+be a list containing the signature variable which is previously obtained from the gift card. After this fix is in place the website simply says 'card used'.
+
+
+

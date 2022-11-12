@@ -115,6 +115,7 @@ def buy_card_view(request, prod_num=0):
 
 
 # KG: What stops an attacker from making me buy a card for him?
+@csrf_protect
 def gift_card_view(request, prod_num=0):
     context = {"prod_num": prod_num}
     if request.method == "GET":
@@ -165,7 +166,6 @@ def gift_card_view(request, prod_num=0):
         card_file.close()
         return render(request, f"gift.html", context)
 
-
 def use_card_view(request):
     context = {'card_found': None}
     if request.method == 'GET':
@@ -194,7 +194,7 @@ def use_card_view(request):
         # KG: data seems dangerous.
         signature = json.loads(card_data)['records'][0]['signature']
         # signatures should be pretty unique, right?
-        card_query = Card.objects.raw('select id from LegacySite_card where data = \'%s\'' % signature)
+        card_query = Card.objects.raw('select id from LegacySite_card where data = \'%s\'' % [signature])
         user_cards = Card.objects.raw(
             'select id, count(*) as count from LegacySite_card where LegacySite_card.user_id = %s' % str(
                 request.user.id))
