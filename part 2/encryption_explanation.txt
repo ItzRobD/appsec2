@@ -1,0 +1,11 @@
+To handle encryption of the database used for the gift card site I found the package django-cryptography. This provides a simple way
+to encrypt data at rest while performing decryption itself to handle data in transit and in use. Since we only need to encrypt the data
+field of the gift card I added the encrypt() function around the data in models.py. To test that this worked I purchased a new gift card
+so that the gift card added to the database would contain the encrypted values. To verify this, I opened the database
+in sqlite and found that the field had been replaced with 'BLOB'. I was able to continue to use and access the site afterwords.
+
+To perform proper key management we need to ensure that the secret key value is not visible on the repository and is only stored on the
+live server. To facilitate this, I used the package python-dotenv to separate the variable from the rest of the project. I created a
+.env file which contains the secret key. Within settings.py for the site I removed the SECRET_KEY variable which was in clear text from the file.
+I then used the imported package to create a variable from that file, if it's found. Since the goal is to ensure that it doesn't reach
+the respository, I then created a git ignore file containing .env to prevent it from being part of the commits.
