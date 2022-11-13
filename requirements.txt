@@ -1,7 +1,7 @@
 requests
 django-encrypted-model-fields
-pytest~=7.1.2
+pytest~=7.0.1
 pytest-django
-Django~=4.1.3
+Django
 django-cryptography
 python-dotenv
