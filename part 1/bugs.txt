@@ -7,8 +7,8 @@ The fix for this bug is simple. We remove the safe tag which will allow input va
 
 
 At this point I tried to test this using github actions but no matter what I tried it was unsuccessful. I know it was suggested to use individual
-python files to conduct the tests but I didn't know how to do that. I was able to successfully test these attacks and fixes locally, however, so
-that's how I had to proceed through the rest of the lab.
+python files to conduct the tests but I didn't know how to do that. I was able to successfully test these attacks and fixes locally. After this,
+I decided to set up travis CI so I included the travis file, created the fixture json from dumping the database, and set up the tests.py class.
 
 
 The second attack is using a CSRF attack. 
