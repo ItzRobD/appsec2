@@ -32,5 +32,8 @@ The gift card I created is included as 'attack.gftcrd'
 To fix this we will not use raw text as part of the query. We can pass the signature instead as a parameter. I changed the variable signature to instead
 be a list containing the signature variable which is previously obtained from the gift card. After this fix is in place the website simply says 'card used'.
 
-
+I know that there is another vulnerability in the extras.py file on line 57 where the code is performing a system call. It involves the input of the 
+name from when you use a gift card. I've tried numerous attempts using the names such as '; mkdir attack' and '; ls > attack' to either make a directory
+or save the contents of the current directory to a file to prove that an attack has happened but in every case a gift card with that name was created.
+I can't get the attack to succeed but I know that's the direction I should be heading and I think with more time and resources I could make it successful.
 
